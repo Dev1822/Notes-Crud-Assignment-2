@@ -4,12 +4,14 @@ const {
   createNote,
   createMultipleNotes,
   getAllNotes,
-  getNoteById
+  getNoteById,
+  replaceNote
 } = require("../controller/note.controller.js");
 
 router.post("/", createNote);
 router.post("/bulk", createMultipleNotes);
 router.get("/", getAllNotes);
 router.get("/:id", getNoteById);
+router.put("/:id", replaceNote);
 
 module.exports = router;
