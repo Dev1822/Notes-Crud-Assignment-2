@@ -271,6 +271,44 @@ const deleteMultipleNotes = async (req, res) => {
   }
 };
 
+const getNotesByCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+    const allowedCategories = ["work", "personal", "study"];
+
+    if (!allowedCategories.includes(category)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid category. Allowed: work, personal, study",
+        data: null
+      });
+    }
+
+    const notes = await Notes.find({ category });
+
+    if (!notes || notes.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: `No notes found for category: ${category}`,
+        data: null
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `Notes fetched for category: ${category}`,
+      count: notes.length,
+      data: notes
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
+      data: null
+    });
+  }
+};
+
 module.exports = {
   createNote,
   createMultipleNotes,
@@ -279,5 +317,6 @@ module.exports = {
   replaceNote,
   updateNote,
   deleteNote,
-  deleteMultipleNotes
+  deleteMultipleNotes,
+  getNotesByCategory
 };
