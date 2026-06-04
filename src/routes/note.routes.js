@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { createNote } = require("../controller/note.controller.js");
+const { 
+  createNote,
+  createBulkNotes 
+} = require("../controller/note.controller.js");
 
+router.post("/bulk", createBulkNotes);
 router.post("/", createNote);
 
 module.exports = router;
