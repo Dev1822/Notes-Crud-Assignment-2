@@ -276,7 +276,26 @@ const sortNotes = async (req, res) => {
   }
 };
 
+const sortPinnedNotes = async (req, res) => {
+  try {
+    const allowed = ["title", "createdAt", "updatedAt", "category"];
+    const sortBy = req.query.sortBy || "createdAt";
+    const order = req.query.order === "asc" ? 1 : -1;
+
+    if (!allowed.includes(sortBy)) {
+      return res.status(400).json({ success: false, message: "Invalid sortBy. Allowed: title, createdAt, updatedAt, category", data: null });
+    }
+    
+    const notes = await Notes.find({ isPinned: true }).sort({ [sortBy]: order });
+    const orderText = order === 1 ? "ascending" : "descending";
+    return res.status(200).json({ success: true, message: `Pinned notes sorted by ${sortBy} in ${orderText} order`, count: notes.length, data: notes });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", data: null });
+  }
+};
+
 module.exports = {
+  sortPinnedNotes,
   sortNotes,
   paginateByCategory,
   paginateNotes,
