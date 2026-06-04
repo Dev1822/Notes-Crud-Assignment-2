@@ -49,7 +49,17 @@ const createBulkNotes = async (req, res) => {
   }
 };
 
+const getAllNotes = async (req, res) => {
+  try {
+    const notes = await Notes.find();
+    return res.status(200).json({ success: true, message: "Notes fetched successfully", count: notes.length, data: notes });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", data: null });
+  }
+};
+
 module.exports = {
+  getAllNotes,
   createBulkNotes,
   createNote
 };
