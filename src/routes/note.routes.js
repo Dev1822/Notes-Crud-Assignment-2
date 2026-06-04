@@ -8,11 +8,13 @@ const {
   replaceNote,
   updateNote,
   deleteNote,
-  deleteBulkNotes 
+  deleteBulkNotes,
+  getNotesByCategory 
 } = require("../controller/note.controller.js");
 
 router.post("/bulk", createBulkNotes);
 router.delete("/bulk", deleteBulkNotes);
+router.get("/category/:category", getNotesByCategory);
 router.post("/", createNote);
 router.get("/", getAllNotes);
 router.get("/:id", getNoteById);
