@@ -70,7 +70,20 @@ const getNoteById = async (req, res) => {
   }
 };
 
+const replaceNote = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ success: false, message: "Invalid note ID", data: null });
+    const updated = await Notes.findByIdAndUpdate(id, req.body, { new: true, overwrite: true, runValidators: true });
+    if (!updated) return res.status(404).json({ success: false, message: "Note not found", data: null });
+    return res.status(200).json({ success: true, message: "Note replaced successfully", data: updated });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Internal server error", data: null });
+  }
+};
+
 module.exports = {
+  replaceNote,
   getNoteById,
   getAllNotes,
   createBulkNotes,
