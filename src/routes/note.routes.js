@@ -11,12 +11,14 @@ const {
   deleteMultipleNotes,
   getNotesByCategory,
   getNotesByStatus,
-  getNoteSummary
+  getNoteSummary,
+  getNotesByFilter
 } = require("../controller/note.controller.js");
 
 router.post("/", createNote);
 router.post("/bulk", createMultipleNotes);
 router.get("/", getAllNotes);
+router.get("/filter", getNotesByFilter);
 router.get("/category/:category", getNotesByCategory);
 router.get("/status/:isPinned", getNotesByStatus);
 router.get("/:id/summary", getNoteSummary);
