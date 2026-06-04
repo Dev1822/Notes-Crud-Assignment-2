@@ -14,7 +14,8 @@ const {
   getNoteSummary,
   getNotesByFilter,
   getPinnedNotes,
-  getNotesByCategoryQuery
+  getNotesByCategoryQuery,
+  getNotesByDateRange
 } = require("../controller/note.controller.js");
 
 router.post("/", createNote);
@@ -23,6 +24,7 @@ router.get("/", getAllNotes);
 router.get("/filter", getNotesByFilter);
 router.get("/filter/pinned", getPinnedNotes);
 router.get("/filter/category", getNotesByCategoryQuery);
+router.get("/filter/date-range", getNotesByDateRange);
 router.get("/category/:category", getNotesByCategory);
 router.get("/status/:isPinned", getNotesByStatus);
 router.get("/:id/summary", getNoteSummary);
